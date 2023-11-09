@@ -43,6 +43,7 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
     var list: List<String> = listOf()
     var listPercentage: List<String> = listOf()
     var jsontoArray:List<Int> = listOf()
+    var paramArray: MutableList<Int> = mutableListOf()
 
     Log.d("TAG", "PortofolioScreen: " + portofolioData.size)
     val startActivityLauncher: ActivityResultLauncher<Intent> =
@@ -84,15 +85,31 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
                         Log.d("TAG", "PortofolioScreen: ${idata.data}")
                         //parsing
                         jsontoArray = jsonStringToArrayLine(idata.data.toString())
-                        Log.d("parsing", "PortofolioScreen: $jsontoArray")
                     }
                     else -> {
                         Log.d("TAG", "PortofolioScreen: Unknown type")
                     }
                 }
             }
+            jsontoArray = jsontoArray.sorted()
+
+//            jsontoArray.forEach { itemJson ->
+//                val paramArray = Array(jsontoArray.size) { 0 }
+//                for (itemJson in jsontoArray) {
+//                    val index = jsontoArray.indexOf(itemJson)
+//                    paramArray[index] += 1
+//                }
+//            }
+
+            val paramArray = Array(jsontoArray.size) { 0 }
+            for (json in jsontoArray) {
+                val index = jsontoArray.indexOf(json)
+                paramArray[index] += 1
+            }
+
+            Log.d("TAG", "PortofolioScreen paramArray All: " + paramArray.joinToString())
             Log.d("TAG", "PortofolioScreen list: $list")
-            DefaultUI(list, listPercentage, jsontoArray, startActivityLauncher, LocalContext.current)
+            DefaultUI(list, listPercentage, paramArray.toList(), startActivityLauncher, LocalContext.current)
         }
     }
 }
