@@ -40,7 +40,6 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
     var list: List<String> = listOf()
     var listPercentage: List<String> = listOf()
     var jsontoArray:List<Int> = listOf()
-    var paramArray: MutableList<Int> = mutableListOf()
 
     Log.d("TAG", "PortofolioScreen: " + portofolioData.size)
     val startActivityLauncher: ActivityResultLauncher<Intent> =
@@ -128,7 +127,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
     ) {
         Text(
             text = text,
-            style = MaterialTheme.typography.bodyLarge,
+            style = MaterialTheme.typography.displaySmall,
             color = Color.Black
         )
 
@@ -142,7 +141,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                 intent.putStringArrayListExtra("value_percentage", valuePercentage)
                 startActivityLauncher.launch(intent)
             },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = 10.dp)
         ) {
             Text(text = "Click here to donut chart")
         }
@@ -150,21 +149,26 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
         Button(
             onClick = {
                 val intent = Intent(context, PromoActivity::class.java)
-                val valueLabel = array.toCollection(ArrayList())
-                val valuePercentage = arrayPercentage.toCollection(ArrayList())
-                Log.d("TAG", "DefaultUI valueLabel: $valueLabel")
-                intent.putStringArrayListExtra("value_label", valueLabel)
-                intent.putStringArrayListExtra("value_percentage", valuePercentage)
                 startActivityLauncher.launch(intent)
             },
-            modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)
+            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
         ) {
             Text(text = "Click here to promo list")
         }
 
+        Button(
+            onClick = {
+                val intent = Intent(context, BarcodeActivity::class.java)
+                startActivityLauncher.launch(intent)
+            },
+            modifier = Modifier.padding(bottom = 24.dp)
+        ) {
+            Text(text = "Click here to barcode")
+        }
+
         Text(
             text = "Line Chart Portofolio",
-            style = MaterialTheme.typography.displaySmall,
+            style = MaterialTheme.typography.headlineLarge,
             color = Color.Black
         )
 
@@ -172,8 +176,8 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(30.dp)
-                .padding(top = 18.dp)
+                .padding(24.dp)
+                .padding(top = 4.dp)
         ) {
             // Draw X-axis
             drawLine(
@@ -209,7 +213,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                         radius = 4f
                     )
 
-                    val xAxisLabelY = size.height + 20f // Adjust the y-coordinate for spacing
+                    val xAxisLabelY = size.height + 30f // Adjust the y-coordinate for spacing
                     dataTanggal.forEachIndexed { index, value ->
                         val x = index * scaleX
                         val y = size.height - value * scaleY
@@ -221,13 +225,13 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 xAxisLabelY, // Use the adjusted y-coordinate
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 15f
+                                    textSize = 30f
                                 }
                             )
                         }
                     }
 
-                    val yAxisLabelX = -20f // Adjust the x-coordinate for spacing
+                    val yAxisLabelX = -30f // Adjust the x-coordinate for spacing
                     for (i in 0 until maxY) {
                         val yLabel = (0 + i)
                         drawIntoCanvas {
@@ -237,7 +241,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 size.height - i * scaleY - 10f, // Adjust the y-coordinate for centering
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 14f
+                                    textSize = 30f
                                 }
                             )
                         }
