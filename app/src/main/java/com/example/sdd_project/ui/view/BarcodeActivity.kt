@@ -45,6 +45,14 @@ class BarcodeActivity : ComponentActivity() {
     private var requestPermissionLauncher =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted: Boolean ->
             if (isGranted) {
+                setContent {
+                    MaterialTheme {
+                        Surface(color = Color.Black) {
+                            CameraView()
+                        }
+                    }
+                }
+                cameraExecutor = Executors.newSingleThreadExecutor()
             }
         }
 

@@ -1,6 +1,10 @@
 package com.example.sdd_project.ui.view
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Column
@@ -37,13 +41,32 @@ class PromoActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     val myViewModel: PromoViewModel = viewModel()
-                    LaunchedEffect(true) {
-                        myViewModel.fetchPromos()
+                    val isNetworkAvailable = isNetworkAvailable(this)
+
+                    if (isNetworkAvailable) {
+                        LaunchedEffect(true) {
+                            myViewModel.fetchPromos()
+                        }
+                        myViewModel.promoData?.let { PromoScreen(it) }
+                    } else {
+                        // Handle case when there is no internet connection
+                        Toast.makeText(this, "No internet. try again later.", Toast.LENGTH_SHORT).show()
+                        onBackPressed()
                     }
-                    myViewModel.promoData?.let { PromoScreen(it) }
                 }
             }
         }
+    }
+    private fun isNetworkAvailable(context: Context): Boolean {
+        val connectivityManager =
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+        val capabilities =
+            connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+
+        return capabilities != null &&
+                (capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
+                        capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR))
     }
 }
 
