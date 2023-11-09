@@ -133,7 +133,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
 
         Button(
             onClick = {
-                val intent = Intent(context, NewActivity::class.java)
+                val intent = Intent(context, DonutActivity::class.java)
                 val valueLabel = array.toCollection(ArrayList())
                 val valuePercentage = arrayPercentage.toCollection(ArrayList())
                 Log.d("TAG", "DefaultUI valueLabel: $valueLabel")
@@ -225,7 +225,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 xAxisLabelY, // Use the adjusted y-coordinate
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 30f
+                                    textSize = 22f
                                 }
                             )
                         }
@@ -241,7 +241,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 size.height - i * scaleY - 10f, // Adjust the y-coordinate for centering
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 30f
+                                    textSize = 22f
                                 }
                             )
                         }

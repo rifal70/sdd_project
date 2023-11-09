@@ -1,5 +1,6 @@
 package com.example.sdd_project.ui.view
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -13,6 +14,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
@@ -25,10 +27,15 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.graphics.nativeCanvas
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import kotlin.math.cos
+import kotlin.math.sin
 
-class NewActivity : ComponentActivity() {
+class DonutActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -42,7 +49,13 @@ class NewActivity : ComponentActivity() {
                         verticalArrangement = Arrangement.Center,
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
-
+                        Text(
+                            text = "Donut Chart",
+                            style = MaterialTheme.typography.h3,
+                            color = Color.Black,
+                            modifier = Modifier
+                                .padding(bottom = 40.dp)
+                        )
                         val label: ArrayList<String>? = intent.getStringArrayListExtra("value_label")
                         val percentage: ArrayList<String>? = intent.getStringArrayListExtra("value_percentage")
 
@@ -88,8 +101,13 @@ fun DoughnutChart(
         modifier = Modifier.size(size = size)
     ) {
         var startAngle = -90f
+        val sizePx = size.toPx()
 
         for (i in values.indices) {
+            val angle = startAngle + sweepAngles[i] / 2
+            val textX = center.x + (sizePx / 4) * cos(Math.toRadians(angle.toDouble())).toFloat()
+            val textY = center.y + (sizePx / 4) * sin(Math.toRadians(angle.toDouble())).toFloat()
+
             drawArc(
                 color = colors[i],
                 startAngle = startAngle,
@@ -97,6 +115,19 @@ fun DoughnutChart(
                 useCenter = false,
                 style = Stroke(width = thickness.value, cap = StrokeCap.Butt)
             )
+            drawIntoCanvas {
+                it.nativeCanvas.drawText(
+                    "${proportions[i]}%",
+                    textX,
+                    textY,
+                    Paint().apply {
+                        color = Color.Black.toArgb()
+                        textSize = 14f.dp.toPx()
+                        textAlign = Paint.Align.CENTER
+                    }
+                )
+            }
+
             startAngle += sweepAngles[i]
         }
     }

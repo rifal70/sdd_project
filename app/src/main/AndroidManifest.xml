@@ -31,7 +31,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".ui.view.NewActivity"
+            android:name=".ui.view.DonutActivity"
             android:exported="true" />
         <activity
             android:name=".ui.view.BarcodeActivity"
