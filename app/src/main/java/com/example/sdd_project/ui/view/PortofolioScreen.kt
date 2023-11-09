@@ -11,9 +11,7 @@ import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.Button
-import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -30,7 +28,6 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.example.sdd_project.data.DonutChartData
 import com.example.sdd_project.view_model.PortofolioViewModel
 import com.google.gson.Gson
@@ -165,13 +162,10 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
             Text(text = "Click here to promo list")
         }
 
-        BasicTextField(
-            value = "Line Chart Portofolio",
-            onValueChange = { newText ->
-                text = newText
-            },
-            singleLine = true,
-            textStyle = LocalTextStyle.current.copy(color = Color.Black, fontSize = 24.sp)
+        Text(
+            text = "Line Chart Portofolio",
+            style = MaterialTheme.typography.displaySmall,
+            color = Color.Black
         )
 
         //Grafik Linechart
