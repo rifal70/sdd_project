@@ -1,6 +1,5 @@
-package com.example.sdd_project
+package com.example.sdd_project.data
 
-import com.example.sdd_project.data.PortofolioData
 import com.google.gson.Gson
 
 fun loadPortfolioDataFromJson(): List<*>? {

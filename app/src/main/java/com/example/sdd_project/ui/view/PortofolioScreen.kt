@@ -1,4 +1,4 @@
-package com.example.sdd_project
+package com.example.sdd_project.ui.view
 
 import android.content.Context
 import android.content.Intent
@@ -40,6 +40,7 @@ import com.google.gson.reflect.TypeToken
 fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
     val portofolioData by portofolioViewModel.portofolioData.collectAsState()
     var list: List<String> = listOf()
+    var listPercentage: List<String> = listOf()
     var jsontoArray:List<Int> = listOf()
 
     Log.d("TAG", "PortofolioScreen: " + portofolioData.size)
@@ -72,6 +73,7 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
                             println("Percentage: ${donutChartDataLista.percentage}")
                             println("Data:")
                             list = list + donutChartDataLista.label
+                            listPercentage = listPercentage + donutChartDataLista.percentage.toString()
                             for (entry in donutChartDataLista.data) {
                                 println("Date: ${entry.trx_date}, Nominal: ${entry.nominal}")
                             }
@@ -89,7 +91,7 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
                 }
             }
             Log.d("TAG", "PortofolioScreen list: $list")
-            DefaultUI(list, jsontoArray, startActivityLauncher, LocalContext.current)
+            DefaultUI(list, listPercentage, jsontoArray, startActivityLauncher, LocalContext.current)
         }
     }
 }
@@ -102,7 +104,7 @@ fun jsonStringToArrayLine(jsonString: String): List<Int> {
 }
 
 @Composable
-fun DefaultUI(array: List<String>, dataList: List<Int>, startActivityLauncher: ActivityResultLauncher<Intent>, context: Context) {
+fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List<Int>, startActivityLauncher: ActivityResultLauncher<Intent>, context: Context) {
     var text by remember { mutableStateOf("Hello, World!") }
     Column(
         modifier = Modifier
@@ -128,13 +130,30 @@ fun DefaultUI(array: List<String>, dataList: List<Int>, startActivityLauncher: A
             onClick = {
                 val intent = Intent(context, NewActivity::class.java)
                 val valueLabel = array.toCollection(ArrayList())
+                val valuePercentage = arrayPercentage.toCollection(ArrayList())
                 Log.d("TAG", "DefaultUI valueLabel: $valueLabel")
                 intent.putStringArrayListExtra("value_label", valueLabel)
+                intent.putStringArrayListExtra("value_percentage", valuePercentage)
                 startActivityLauncher.launch(intent)
             },
             modifier = Modifier.padding(top = 16.dp)
         ) {
             Text(text = "Click here to donut chart")
+        }
+
+        Button(
+            onClick = {
+                val intent = Intent(context, PromoActivity::class.java)
+                val valueLabel = array.toCollection(ArrayList())
+                val valuePercentage = arrayPercentage.toCollection(ArrayList())
+                Log.d("TAG", "DefaultUI valueLabel: $valueLabel")
+                intent.putStringArrayListExtra("value_label", valueLabel)
+                intent.putStringArrayListExtra("value_percentage", valuePercentage)
+                startActivityLauncher.launch(intent)
+            },
+            modifier = Modifier.padding(top = 16.dp)
+        ) {
+            Text(text = "Click here to promo list")
         }
 
         //Grafik Linechart

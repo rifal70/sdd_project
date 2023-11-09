@@ -1,4 +1,4 @@
-package com.example.sdd_project
+package com.example.sdd_project.ui.view
 
 import android.os.Bundle
 import android.util.Log
@@ -43,9 +43,14 @@ class NewActivity : ComponentActivity() {
                         horizontalAlignment = Alignment.CenterHorizontally
                     ) {
 
-                        var strUser: ArrayList<String>? = intent.getStringArrayListExtra("value_label")
-                        strUser?.let { DoughnutChart(it)
-                            Log.d("TAG", "onCreate: newact$it")
+                        val label: ArrayList<String>? = intent.getStringArrayListExtra("value_label")
+                        val percentage: ArrayList<String>? = intent.getStringArrayListExtra("value_percentage")
+
+                        if (label != null && percentage != null) {
+                            val percentage: List<String> = listOf("30", "45.5", "60", "75.2")
+                            val listInt: List<Int> = percentage.map { it.toDouble().toInt() }
+                            Log.d("TAG", "onCreate: listInt$listInt")
+                            DoughnutChart(label,listInt)
                         }
                     }
                 }
@@ -57,12 +62,15 @@ class NewActivity : ComponentActivity() {
 @Composable
 fun DoughnutChart(
     str: List<String>,
-    values: List<Float> = listOf(65f, 40f, 25f, 20f),
+    percentage: List<Int>,
+    values: List<Int> = percentage,
     colors: List<Color> = listOf(
         Color(0xFFFF6384),
         Color(0xFFFFCE56),
         Color(0xFF36A2EB),
-        Color(0xFF448AFF)
+        Color(0xFF9C27B0),
+        Color(0xFFFF5722),
+        Color(0xFFCDDC39)
     ),
     legend: List<String> = str,
     size: Dp = 200.dp,
@@ -85,7 +93,7 @@ fun DoughnutChart(
             drawArc(
                 color = colors[i],
                 startAngle = startAngle,
-                sweepAngle = sweepAngles[i],
+                sweepAngle = sweepAngles[i].toFloat(),
                 useCenter = false,
                 style = Stroke(width = thickness.value, cap = StrokeCap.Butt)
             )
