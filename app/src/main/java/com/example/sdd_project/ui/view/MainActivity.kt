@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import com.example.sdd_project.app.PortofolioApp
 import com.example.sdd_project.data.PortofolioData
 import com.example.sdd_project.data.loadPortfolioDataFromJson
 import com.example.sdd_project.view_model.PortofolioViewModel
@@ -15,7 +14,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            PortofolioApp(portofolioViewModel)
             PortofolioScreen(portofolioViewModel)
         }
         // Parse JSON data and update the ViewModel

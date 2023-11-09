@@ -180,6 +180,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                 strokeWidth = 2f
             )
 
+            val dataTanggal: List<Int> = listOf(1,2,3,4,5,6,7,8,9,10,11,12)
             // Draw line chart with text labels
             if (dataList.isNotEmpty()) {
                 val maxY = dataList.maxOrNull() ?: 1
@@ -197,18 +198,52 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                         radius = 4f
                     )
 
-                    // Draw text labels at each point
-                    drawIntoCanvas {
-                        it.nativeCanvas.drawText(
-                            value.toString(),
-                            x - 10f, // Adjust the x-coordinate for centering
-                            y - 10f, // Adjust the y-coordinate for centering
-                            android.graphics.Paint().apply {
-                                color = android.graphics.Color.BLACK
-                                textSize = 20f // Adjust the text size as needed
-                            }
-                        )
+                    val xAxisLabelY = size.height + 20f // Adjust the y-coordinate for spacing
+                    dataTanggal.forEachIndexed { index, value ->
+                        val x = index * scaleX
+                        val y = size.height - value * scaleY
+
+                        drawIntoCanvas {
+                            it.nativeCanvas.drawText(
+                                value.toString(),
+                                x - 10f,
+                                xAxisLabelY, // Use the adjusted y-coordinate
+                                android.graphics.Paint().apply {
+                                    color = android.graphics.Color.BLACK
+                                    textSize = 15f
+                                }
+                            )
+                        }
                     }
+
+                    val yAxisLabelX = -20f // Adjust the x-coordinate for spacing
+                    for (i in 0 until maxY) {
+                        val yLabel = (0 + i)
+                        drawIntoCanvas {
+                            it.nativeCanvas.drawText(
+                                yLabel.toInt().toString(),
+                                yAxisLabelX,
+                                size.height - i * scaleY - 10f, // Adjust the y-coordinate for centering
+                                android.graphics.Paint().apply {
+                                    color = android.graphics.Color.BLACK
+                                    textSize = 14f
+                                }
+                            )
+                        }
+                    }
+
+                    // Draw text labels at each point
+//                    drawIntoCanvas {
+//                        it.nativeCanvas.drawText(
+//                            value.toString(),
+//                            x - 10f, // Adjust the x-coordinate for centering
+//                            y - 10f, // Adjust the y-coordinate for centering
+//                            android.graphics.Paint().apply {
+////                                color = android.graphics.Color.BLACK
+////                                textSize = 20f // Adjust the text size as needed
+//                            }
+//                        )
+//                    }
 
                     // Draw connecting lines
                     if (index < dataList.size - 1) {
