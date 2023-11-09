@@ -1,6 +1,8 @@
 package com.example.sdd_project.ui.view
 
+import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
@@ -13,6 +15,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.graphics.ImageBitmapConfig
 import androidx.compose.ui.graphics.toArgb
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -26,6 +29,7 @@ import com.google.zxing.common.BitMatrix
 fun BarcodePage(qrString: String) {
     var saldo by remember { mutableIntStateOf(0) }
     val barcodeBitmap = generateBarcodeBitmap(qrString)
+    val dis = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -67,7 +71,7 @@ fun BarcodePage(qrString: String) {
         Button(
             onClick = {
                 Log.d("TAG", "BarcodePage: " + barcodeBitmap.toString())
-                saldo = readSaldoFromQRCode(qrString)
+                saldo = readSaldoFromQRCode(qrString, dis)
             },
             modifier = Modifier
                 .fillMaxWidth()
@@ -100,9 +104,12 @@ fun generateBarcodeBitmap(qrString: String): ImageBitmap? {
     }
 }
 
-fun readSaldoFromQRCode(qrString: String): Int {
+fun readSaldoFromQRCode(qrString: String, dis: Context): Int {
     val saldoRegex = Regex("""\b(\d+)\b""")
     val matchResult = saldoRegex.find(qrString)
+    if (matchResult?.value != null){
+        Toast.makeText(dis, "Berhasil update saldo. ${matchResult.value}", Toast.LENGTH_SHORT).show()
+    }
     return matchResult?.value?.toIntOrNull() ?: 0
 }
 @Preview
