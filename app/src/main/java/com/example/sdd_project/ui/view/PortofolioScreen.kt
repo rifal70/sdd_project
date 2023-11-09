@@ -30,6 +30,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.sdd_project.data.DonutChartData
 import com.example.sdd_project.view_model.PortofolioViewModel
 import com.google.gson.Gson
@@ -117,15 +118,6 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
             color = Color.Black
         )
 
-        BasicTextField(
-            value = text,
-            onValueChange = { newText ->
-                text = newText
-            },
-            singleLine = true,
-            textStyle = LocalTextStyle.current.copy(color = Color.Black)
-        )
-
         Button(
             onClick = {
                 val intent = Intent(context, NewActivity::class.java)
@@ -151,16 +143,26 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                 intent.putStringArrayListExtra("value_percentage", valuePercentage)
                 startActivityLauncher.launch(intent)
             },
-            modifier = Modifier.padding(top = 16.dp)
+            modifier = Modifier.padding(top = 16.dp, bottom = 24.dp)
         ) {
             Text(text = "Click here to promo list")
         }
+
+        BasicTextField(
+            value = "Line Chart Portofolio",
+            onValueChange = { newText ->
+                text = newText
+            },
+            singleLine = true,
+            textStyle = LocalTextStyle.current.copy(color = Color.Black, fontSize = 24.sp)
+        )
 
         //Grafik Linechart
         Canvas(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(30.dp)
+                .padding(top = 18.dp)
         ) {
             // Draw X-axis
             drawLine(
