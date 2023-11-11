@@ -1,5 +1,15 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <style name="Theme.Sdd_project" parent="android:Theme.Material.Light.NoActionBar" />
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Theme.sdd_project" parent="Theme.AppCompat.DayNight.DarkActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/darkblue2</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" >@color/darkblue2</item>
+    </style>
+    <style name="Theme.sdd_project.NoActionBar">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+    <style name="Theme.sdd_project.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+    <style name="Theme.sdd_project.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 </resources>

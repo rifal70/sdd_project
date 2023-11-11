@@ -2,6 +2,7 @@ package com.example.sdd_project.ui.view
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Paint
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -25,6 +26,7 @@ import androidx.compose.ui.graphics.nativeCanvas
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.sdd_project.data.DonutChartData
 import com.example.sdd_project.view_model.PortofolioViewModel
 import com.google.gson.Gson
@@ -111,7 +113,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(16.dp)
+            .padding(8.dp)
     ) {
         Text(
             text = "Menu Portofolio",
@@ -181,7 +183,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                         radius = 4f
                     )
 
-                    val xAxisLabelY = size.height + 30f // Adjust the y-coordinate for spacing
+                    val xAxisLabelY = size.height + 22.dp.toPx() // Adjust the y-coordinate for spacing
                     dataTanggal.forEachIndexed { index, value ->
                         val x = index * scaleX
                         val y = size.height - value * scaleY
@@ -189,27 +191,27 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                         drawIntoCanvas {
                             it.nativeCanvas.drawText(
                                 value.toString(),
-                                x - 10f,
+                                x - 10.dp.toPx(),
                                 xAxisLabelY, // Use the adjusted y-coordinate
-                                android.graphics.Paint().apply {
+                                Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 25f
+                                    textSize = 17.sp.toPx()
                                 }
                             )
                         }
                     }
 
-                    val yAxisLabelX = -30f // Adjust the x-coordinate for spacing
+                    val yAxisLabelX = (-15).dp.toPx() // Adjust the x-coordinate for spacing
                     for (i in 0 until maxY) {
                         val yLabel = (0 + i)
                         drawIntoCanvas {
                             it.nativeCanvas.drawText(
                                 yLabel.toInt().toString(),
                                 yAxisLabelX,
-                                size.height - i * scaleY - 10f, // Adjust the y-coordinate for centering
-                                android.graphics.Paint().apply {
+                                size.height - i * scaleY - 10.dp.toPx(), // Adjust the y-coordinate for centering
+                                Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 25f
+                                    textSize = 17.sp.toPx()
                                 }
                             )
                         }
