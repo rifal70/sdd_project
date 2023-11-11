@@ -31,6 +31,9 @@
             </intent-filter>
         </activity>
         <activity
+            android:name=".ui.view.PortofolioActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.view.DonutActivity"
             android:exported="true" />
         <activity
@@ -38,7 +41,7 @@
             android:exported="true" />
         <activity
             android:name=".ui.view.PromoActivity"
-            android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar"/>
+            android:exported="true" />
     </application>
+
 </manifest>

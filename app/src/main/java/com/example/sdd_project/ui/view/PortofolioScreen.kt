@@ -17,9 +17,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
@@ -89,14 +86,6 @@ fun PortofolioScreen(portofolioViewModel: PortofolioViewModel) {
             }
             jsontoArray = jsontoArray.sorted()
 
-//            jsontoArray.forEach { itemJson ->
-//                val paramArray = Array(jsontoArray.size) { 0 }
-//                for (itemJson in jsontoArray) {
-//                    val index = jsontoArray.indexOf(itemJson)
-//                    paramArray[index] += 1
-//                }
-//            }
-
             val paramArray = Array(jsontoArray.size) { 0 }
             for (json in jsontoArray) {
                 val index = jsontoArray.indexOf(json)
@@ -119,14 +108,13 @@ fun jsonStringToArrayLine(jsonString: String): List<Int> {
 
 @Composable
 fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List<Int>, startActivityLauncher: ActivityResultLauncher<Intent>, context: Context) {
-    var text by remember { mutableStateOf("Hello, World!") }
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp)
     ) {
         Text(
-            text = text,
+            text = "Menu Portofolio",
             style = MaterialTheme.typography.displaySmall,
             color = Color.Black
         )
@@ -141,29 +129,9 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                 intent.putStringArrayListExtra("value_percentage", valuePercentage)
                 startActivityLauncher.launch(intent)
             },
-            modifier = Modifier.padding(top = 10.dp)
+            modifier = Modifier.padding(top = 10.dp, bottom = 20.dp)
         ) {
             Text(text = "Click here to donut chart")
-        }
-
-        Button(
-            onClick = {
-                val intent = Intent(context, PromoActivity::class.java)
-                startActivityLauncher.launch(intent)
-            },
-            modifier = Modifier.padding(top = 5.dp, bottom = 5.dp)
-        ) {
-            Text(text = "Click here to promo list")
-        }
-
-        Button(
-            onClick = {
-                val intent = Intent(context, BarcodeActivity::class.java)
-                startActivityLauncher.launch(intent)
-            },
-            modifier = Modifier.padding(bottom = 24.dp)
-        ) {
-            Text(text = "Click here to barcode")
         }
 
         Text(
@@ -225,7 +193,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 xAxisLabelY, // Use the adjusted y-coordinate
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 22f
+                                    textSize = 25f
                                 }
                             )
                         }
@@ -241,7 +209,7 @@ fun DefaultUI(array: List<String>, arrayPercentage: List<String>, dataList: List
                                 size.height - i * scaleY - 10f, // Adjust the y-coordinate for centering
                                 android.graphics.Paint().apply {
                                     color = android.graphics.Color.BLACK
-                                    textSize = 22f
+                                    textSize = 25f
                                 }
                             )
                         }
